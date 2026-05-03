@@ -18,11 +18,11 @@ jobs:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
      - name: Checkov GitHub Action
        uses: bridgecrewio/checkov-action@v12
-       soft_fail: true
        with:
           # This will add both a CLI output to the console and create a results.sarif file
           output_format: cli,sarif
           output_file_path: console,results.sarif
+          soft_fail: true
      - name: Upload SARIF file
        uses: github/codeql-action/upload-sarif@v2
        if: success() || failure()
