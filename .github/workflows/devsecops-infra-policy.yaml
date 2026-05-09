@@ -1,5 +1,15 @@
 name: devsecops-infra-pipeline
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+     inputs:
+       action:
+         description: 'Terraform Action'
+         required: true
+         default: 'apply'
+         type: choice
+         options:
+           - apply
+           - destroy
 jobs:
    devsecops-infra:
      permissions:
@@ -58,10 +68,8 @@ jobs:
        run: terraform validate
      - name: Run terraform plan
        run: terraform plan
-     - name: Run terraform apply
-       run: terraform apply -auto-approve 
-     - name: Run terraform apply
-       run: terraform destroy -auto-approve
+     - name: Run terraform  ${{inputs.action}}
+       run: terraform  ${{inputs.action}} -auto-approve
        
        
        
